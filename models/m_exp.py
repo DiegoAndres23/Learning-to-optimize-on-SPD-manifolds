@@ -16,14 +16,14 @@ class M_Exp(nn.Module):
         n=input1.shape[0]
         dim=input1.shape[1]
 
-        eighty=((torch.eye(dim).cuda())  *10).repeat(n,1,1)
+        eighty=((torch.eye(dim).cpu())  *10).repeat(n,1,1)
         #print ('input1',input1)
         res=input1-eighty
         res=F.relu(res)
         input2=input1-res
 
-        one=torch.ones(input2.shape).cuda()
-        e=torch.eye(dim).cuda()
+        one=torch.ones(input2.shape).cpu()
+        e=torch.eye(dim).cpu()
 
         output=torch.exp(input2)
         output=output-one+e

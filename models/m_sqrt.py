@@ -16,8 +16,8 @@ class M_Sqrt(nn.Module):
         n=input1.shape[0]
         dim=input1.shape[1]
 
-        one=torch.ones(input1.shape).cuda()
-        e=torch.eye(dim).cuda()
+        one=torch.ones(input1.shape).cpu()
+        e=torch.eye(dim).cpu()
 
         output=input1+one-e
         output=torch.where(output > 0, output, self.epsilon*one)

@@ -14,12 +14,12 @@ class M_Log(nn.Module):
         dim=input1.shape[1]
 
         espison=torch.eye(dim)*self.beta
-        espison=espison.cuda()
+        espison=espison.cpu()
         espison=torch.unsqueeze(espison,0)
         input2=torch.where(input1-espison < 0, espison,input1)
 
-        one=torch.ones(input2.shape).cuda()
-        e=torch.eye(dim).cuda()
+        one=torch.ones(input2.shape).cpu()
+        e=torch.eye(dim).cpu()
 
 
         output=torch.log(input2+one-e)

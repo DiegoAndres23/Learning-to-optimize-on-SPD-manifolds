@@ -25,15 +25,15 @@ class LSTM_Optimizee_Model(nn.Module):
     
     def forward(self, input_gradients, prev_state):
 
-        input_gradients = input_gradients.cuda()
+        input_gradients = input_gradients.cpu()
         dim=input_gradients.shape[1]
         
 
         if prev_state is None: 
-            prev_state = (torch.zeros(self.batchsize_para,self.hidden_size,self.hidden_size).cuda(),
-                            torch.zeros(self.batchsize_para,self.hidden_size,self.hidden_size).cuda(),
-                            torch.zeros(self.batchsize_para,self.hidden_size,self.hidden_size).cuda(),
-                            torch.zeros(self.batchsize_para,self.hidden_size,self.hidden_size).cuda(),
+            prev_state = (torch.zeros(self.batchsize_para,self.hidden_size,self.hidden_size).cpu(),
+                            torch.zeros(self.batchsize_para,self.hidden_size,self.hidden_size).cpu(),
+                            torch.zeros(self.batchsize_para,self.hidden_size,self.hidden_size).cpu(),
+                            torch.zeros(self.batchsize_para,self.hidden_size,self.hidden_size).cpu(),
                             )        
         
         update_dir , next_state_dir = self.lstm(input_gradients, prev_state)

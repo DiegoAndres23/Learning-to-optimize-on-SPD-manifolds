@@ -63,14 +63,15 @@ def Learning_to_learn_global_training(opt,hand_optimizee,optimizee,train_loader)
     for i in range(Observe):
 
         if i ==0:
-            M=torch.randn(batchsize_para,DIM, DIM).cuda()
+            # M=torch.randn(batchsize_para,DIM, DIM).cpu()
+            M=torch.randn(batchsize_para,DIM, DIM).cpu()
             for k in range(batchsize_para):
-                M[k]=torch.eye(DIM).cuda()
+                M[k]=torch.eye(DIM).cpu()
 
-            state = (torch.zeros(batchsize_para,DIM,DIM).cuda(),
-                                     torch.zeros(batchsize_para,DIM,DIM).cuda(),
-                                     torch.zeros(batchsize_para,DIM,DIM).cuda(),
-                                     torch.zeros(batchsize_para,DIM,DIM).cuda(),
+            state = (torch.zeros(batchsize_para,DIM,DIM).cpu(),
+                                     torch.zeros(batchsize_para,DIM,DIM).cpu(),
+                                     torch.zeros(batchsize_para,DIM,DIM).cpu(),
+                                     torch.zeros(batchsize_para,DIM,DIM).cpu(),
                                      ) 
             iteration=torch.zeros(batchsize_para)
             M.requires_grad=True
@@ -89,8 +90,8 @@ def Learning_to_learn_global_training(opt,hand_optimizee,optimizee,train_loader)
         break_flag=False
         for j, data in enumerate(train_loader, 0):
             inputs, labels = data
-            inputs = Variable(inputs.cuda())
-            labels = Variable(labels).cuda()
+            inputs = Variable(inputs.cpu())
+            labels = Variable(labels).cpu()
             
             loss = f(inputs,M,labels,opt.sample_num)
             loss.backward()
@@ -100,11 +101,11 @@ def Learning_to_learn_global_training(opt,hand_optimizee,optimizee,train_loader)
             
             for k in range(batchsize_para):
                 if iteration[k]>=Optimizee_Train_Steps-opt.train_steps:       
-                    M[k]=torch.eye(DIM).cuda()
-                    state[0][k]=torch.zeros(DIM,DIM).cuda()
-                    state[1][k]=torch.zeros(DIM,DIM).cuda()
-                    state[2][k]=torch.zeros(DIM,DIM).cuda()
-                    state[3][k]=torch.zeros(DIM,DIM).cuda()   
+                    M[k]=torch.eye(DIM).cpu()
+                    state[0][k]=torch.zeros(DIM,DIM).cpu()
+                    state[1][k]=torch.zeros(DIM,DIM).cpu()
+                    state[2][k]=torch.zeros(DIM,DIM).cpu()
+                    state[3][k]=torch.zeros(DIM,DIM).cpu()   
                     iteration[k]=0
             
 
@@ -155,11 +156,11 @@ def Learning_to_learn_global_training(opt,hand_optimizee,optimizee,train_loader)
             train_loss=train_loss.detach()
             train_loss=0
 
-        M=(torch.randn(batchsize_para,DIM, DIM)).cuda()
-        state = (torch.zeros(batchsize_para,DIM,DIM).cuda(),
-                                torch.zeros(batchsize_para,DIM,DIM).cuda(),
-                                torch.zeros(batchsize_para,DIM,DIM).cuda(),
-                                torch.zeros(batchsize_para,DIM,DIM).cuda(),
+        M=(torch.randn(batchsize_para,DIM, DIM)).cpu()
+        state = (torch.zeros(batchsize_para,DIM,DIM).cpu(),
+                                torch.zeros(batchsize_para,DIM,DIM).cpu(),
+                                torch.zeros(batchsize_para,DIM,DIM).cpu(),
+                                torch.zeros(batchsize_para,DIM,DIM).cpu(),
                                 ) 
         iteration=torch.zeros(batchsize_para)
 
@@ -187,8 +188,8 @@ def Learning_to_learn_global_training(opt,hand_optimizee,optimizee,train_loader)
 
                 print('---------------------------------------------------------------------------')
                 inputs, labels = data
-                inputs = Variable(inputs.cuda())
-                labels = Variable(labels).cuda()
+                inputs = Variable(inputs.cpu())
+                labels = Variable(labels).cpu()
 
                 loss = f(inputs,M,labels,opt.sample_num)
                 train_loss=train_loss+loss
@@ -233,10 +234,10 @@ def Learning_to_learn_global_training(opt,hand_optimizee,optimizee,train_loader)
             for k in range(batchsize_para):
                 if iteration[k]>=Optimizee_Train_Steps-opt.train_steps:
                     M[k]=torch.eye(DIM)
-                    state[0][k]=torch.zeros(DIM,DIM).cuda()
-                    state[1][k]=torch.zeros(DIM,DIM).cuda()
-                    state[2][k]=torch.zeros(DIM,DIM).cuda()
-                    state[3][k]=torch.zeros(DIM,DIM).cuda()     
+                    state[0][k]=torch.zeros(DIM,DIM).cpu()
+                    state[1][k]=torch.zeros(DIM,DIM).cpu()
+                    state[2][k]=torch.zeros(DIM,DIM).cpu()
+                    state[3][k]=torch.zeros(DIM,DIM).cpu()     
                     iteration[k]=0
             
             num=0

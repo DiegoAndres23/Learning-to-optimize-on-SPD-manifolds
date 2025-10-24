@@ -23,7 +23,7 @@ checkpoint = torch.load(opt.prepath)
 LSTM_Optimizee.load_state_dict(checkpoint)
 
 
-train_mnist = KYLBERG(opt.datapath, train=True)
+train_mnist = KYLBERG(opt .datapath, train=True)
 train_loader = torch.utils.data.DataLoader(
         train_mnist, batch_size=opt.batchsize_data,shuffle=True, drop_last=False, num_workers=0)
 
