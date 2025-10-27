@@ -17,9 +17,10 @@ from learner import Learner
 
 opt = config_evaluation.parse_opt()
 print(opt)
-LSTM_Optimizee = LSTM_Optimizee_Model(opt, opt.DIM, opt.DIM, opt.DIM, batchsize_data=opt.batchsize_data, batchsize_para=opt.batchsize_para).cuda()
+LSTM_Optimizee = LSTM_Optimizee_Model(opt, opt.DIM, opt.DIM, opt.DIM, batchsize_data=opt.batchsize_data, batchsize_para=opt.batchsize_para).cpu()
 
-checkpoint = torch.load(opt.prepath)
+# checkpoint = torch.load(opt.prepath)
+checkpoint = torch.load(opt.prepath, map_location=torch.device('cpu'))
 LSTM_Optimizee.load_state_dict(checkpoint)
 
 

@@ -58,10 +58,12 @@ class Learner( object ):
    
             self.M[i]=torch.eye(self.DIM)
 
-        self.M=self.M.cuda()
+        # self.M=self.M.cpu()
+        self.M=self.M.cpu()
         self.M.requires_grad=True
 
-        self.P_tangent=torch.zeros(self.batchsize_para,self.DIM, self.DIM).cuda()
+        # self.P_tangent=torch.zeros(self.batchsize_para,self.DIM, self.DIM).cpu()
+        self.P_tangent=torch.zeros(self.batchsize_para,self.DIM, self.DIM).cpu()
 
 
 
@@ -81,9 +83,9 @@ class Learner( object ):
             
         if num_roll == 0:
             state = None
-            P_tangent=torch.zeros(self.batchsize_para,self.DIM, self.DIM).cuda()
+            P_tangent=torch.zeros(self.batchsize_para,self.DIM, self.DIM).cpu()
             
-        M = M.cuda()
+        M = M.cpu()
         M.requires_grad=True
 
         return M, P_tangent,state
@@ -106,8 +108,8 @@ class Learner( object ):
 
 
                 inputs, labels = data
-                inputs = Variable(inputs.cuda())
-                labels = Variable(labels).cuda()
+                inputs = Variable(inputs.cpu())
+                labels = Variable(labels).cpu()
                 loss = f(inputs,M,labels)
                 localtime = time.asctime( time.localtime(time.time()) )
                 loss.backward() 
@@ -128,8 +130,8 @@ class Learner( object ):
                 total_loss=0
                 for k, subdata in enumerate(train_loader, 0):
                     inputs, labels = subdata
-                    inputs = Variable(inputs.cuda())
-                    labels = Variable(labels).cuda()
+                    inputs = Variable(inputs.cpu())
+                    labels = Variable(labels).cpu()
 
                     loss = f(inputs,M,labels)
                     total_loss += loss.detach()
